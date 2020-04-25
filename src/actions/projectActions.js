@@ -3,7 +3,7 @@ import { GET_ERRORS, GET_PROJECTS, GET_PROJECT, DELETE_PROJECT } from "./types";
 
 export const createProject = (project, history) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:8181/api/project", project);
+    const res = await axios.post("/api/project", project);
     history.push("/dashboard");
     dispatch({
       type: GET_ERRORS,
@@ -19,7 +19,7 @@ export const createProject = (project, history) => async (dispatch) => {
 
 export const updateProject = (project, history) => async (dispatch) => {
   try {
-    const res = await axios.put("http://localhost:8181/api/project", project);
+    const res = await axios.put("/api/project", project);
     history.push("/dashboard");
     dispatch({
       type: GET_ERRORS,
@@ -34,7 +34,7 @@ export const updateProject = (project, history) => async (dispatch) => {
 };
 
 export const getProjects = () => async (dispatch) => {
-  const res = await axios.get("http://localhost:8181/api/project/all");
+  const res = await axios.get("/api/project/all");
   dispatch({
     type: GET_PROJECTS,
     payload: res.data,
@@ -43,9 +43,7 @@ export const getProjects = () => async (dispatch) => {
 
 export const getProject = (projectIdentifier, history) => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `http://localhost:8181/api/project/${projectIdentifier}`
-    );
+    const res = await axios.get(`/api/project/${projectIdentifier}`);
 
     dispatch({
       type: GET_PROJECT,
@@ -57,11 +55,11 @@ export const getProject = (projectIdentifier, history) => async (dispatch) => {
 };
 
 export const deleteProject = (projectIdentifier) => async (dispatch) => {
-  const res = await axios.delete(
-    `http://localhost:8181/api/project/${projectIdentifier}`
-  );
-  dispatch({
-    type: DELETE_PROJECT,
-    payload: projectIdentifier,
-  });
+  if (window.confirm("Are you sure to delete this project?")) {
+    const res = await axios.delete(`/api/project/${projectIdentifier}`);
+    dispatch({
+      type: DELETE_PROJECT,
+      payload: projectIdentifier,
+    });
+  }
 };
