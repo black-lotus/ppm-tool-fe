@@ -6,6 +6,8 @@ import Header from "./components/Layout/Header";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AddProject from "./components/Project/AddProject";
 import UpdateProject from "./components/Project/UpdateProject";
+import ProjectBoard from "./components/ProjectBoard/ProjectBoard";
+import AddProjectTask from "./components/ProjectBoard/ProjectTask/AddProjectTask";
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -22,6 +24,16 @@ class App extends Component {
               exact
               path="/updateProject/:projectIdentifier"
               component={UpdateProject}
+            />
+            <Route
+              exact
+              path="/projectBoard/:projectIdentifier"
+              component={ProjectBoard}
+            />
+            <Route
+              exact
+              path="/addProjectTask/:projectIdentifier"
+              component={AddProjectTask}
             />
           </div>
         </Router>
