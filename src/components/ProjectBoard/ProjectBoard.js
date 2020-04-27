@@ -1,10 +1,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Backlog from "./Backlog";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { getBacklog } from "../../actions/backlogActions";
 
 class ProjectBoard extends Component {
+  componentDidMount() {
+    const { projectIdentifier } = this.props.match.params;
+    this.props.getBacklog(projectIdentifier);
+  }
+
   render() {
     const { projectIdentifier } = this.props.match.params;
+    const { project_tasks } = this.props.backlog;
     return (
       <div className="container">
         <Link
@@ -16,10 +25,19 @@ class ProjectBoard extends Component {
         <br />
         <hr />
 
-        <Backlog />
+        <Backlog project_tasks_prop={project_tasks} />
       </div>
     );
   }
 }
 
-export default ProjectBoard;
+ProjectBoard.propTypes = {
+  backlog: PropTypes.object.isRequired,
+  getBacklog: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  backlog: state.backlog,
+});
+
+export default connect(mapStateToProps, { getBacklog })(ProjectBoard);
