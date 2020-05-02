@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProject } from "../../actions/projectActions";
 import classnames from "classnames";
+import { GET_ERRORS } from "../../actions/types";
+import store from "./../../store";
 
 class AddProject extends Component {
   constructor() {
@@ -42,6 +44,13 @@ class AddProject extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
+  }
+
+  componentWillUnmount() {
+    store.dispatch({
+      type: GET_ERRORS,
+      payload: {},
+    });
   }
 
   render() {

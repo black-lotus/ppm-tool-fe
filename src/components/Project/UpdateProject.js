@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getProject, updateProject } from "../../actions/projectActions";
 import classnames from "classnames";
+import { GET_ERRORS } from "../../actions/types";
+import store from "./../../store";
 
 class UpdateProject extends Component {
   constructor() {
@@ -24,6 +26,13 @@ class UpdateProject extends Component {
   componentDidMount() {
     const { projectIdentifier } = this.props.match.params;
     this.props.getProject(projectIdentifier, this.props.history);
+  }
+
+  componentWillUnmount() {
+    store.dispatch({
+      type: GET_ERRORS,
+      payload: {},
+    });
   }
 
   componentWillReceiveProps(nextProps) {

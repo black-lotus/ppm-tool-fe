@@ -7,6 +7,8 @@ import {
   updateProjectTask,
 } from "../../../actions/backlogActions";
 import PropTypes from "prop-types";
+import { GET_ERRORS } from "../../../actions/types";
+import store from "./../../../store";
 
 class UpdateProjectTask extends Component {
   constructor() {
@@ -26,6 +28,13 @@ class UpdateProjectTask extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentWillUnmount() {
+    store.dispatch({
+      type: GET_ERRORS,
+      payload: {},
+    });
   }
 
   componentDidMount() {
